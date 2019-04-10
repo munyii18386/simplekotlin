@@ -1,2 +1,0 @@
-# simplekotlin
-working with kotlin
