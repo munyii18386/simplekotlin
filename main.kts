@@ -56,41 +56,41 @@ class Person (val firstName: String, val lastName: String, var age: Int ){
 // write a class "Money"
 
 class Money (val amount: Int, val currency: String){
-   
+  
     fun convert(otherCurrency: String): Money{
         var result = 0
          when (otherCurrency){
             "USD" -> 
-                if(currency == "EUR") {
+                if(currency == "EUR" && amount > 0) {
                     result = 10 * amount / 15
-                } else if (currency == "GBP"){
+                } else if (currency == "GBP" && amount > 0){
                     result = 10 * amount / 5
-                } else {
+                } else if (currency == "CAN" && amount > 0){
                     result = 12 * amount / 15
                 }
             "EUR" ->
-                if(currency == "USD") {
+                if(currency == "USD" && amount > 0) {
                     result = 15 * amount / 10
-                } else if (currency == "GBP"){
+                } else if (currency == "GBP" && amount > 0){
                     result = 15 * (10 * amount / 5) / 10
-                } else {
+                } else if (currency == "CAN" && amount > 0){
                     result = 15 * (12 * amount / 15) / 10
                 }
             
             "GBP" -> 
-                if(currency == "EUR") {
+                if(currency == "EUR" && amount > 0) {
                     result = 5 * (10 * amount / 15) / 10
-                } else if (currency == "USD"){
+                } else if (currency == "USD" && amount > 0){
                     result = 5 * amount / 10
-                } else {
+                } else if (currency == "CAN" && amount > 0) {
                     result = 5 * (12 * amount / 15) / 10
                 }
             "CAN" -> 
-                if(currency == "EUR") {
+                if(currency == "EUR" && amount > 0) {
                     result = 15 * (10 * amount / 15) / 10
-                } else if (currency == "GBP"){
+                } else if (currency == "GBP" && amount > 0){
                     result = 15 * (10 * amount / 5) / 10
-                } else {
+                } else if (currency == "USD" && amount > 0){
                     result = 15 * amount / 12
                 }
             else -> println("incorrect currency")
