@@ -5,15 +5,19 @@ println("UW Homework: Simple Kotlin")
 
 // write a "whenFn" that takes an arg of type "Any" and returns a String
 
-fun whenFn(x: Any) : String{
-    "Hello";  return "world"
-    String; return "I don't understand"
-    0; return "zero"
-    1; return "one"
-    2..10; return "low number"
-    Int; return "a number"
-    "I don't understand"
+fun whenFn(x: Any): String{
+
+    when(x){
+       "Hello" -> return "world"
+        0 -> return "zero"
+        1 ->   return "one"
+        2..10 -> return "low number"
+        !in 2..10 -> return "a number"
+        else -> return "I don't understand"
+    }
 }
+
+
 
 // write an "add" function that takes two Ints, returns an Int, and adds the values
 
@@ -34,23 +38,72 @@ fun mathOp(c: Int, d: Int, otherFun: (e: Int, f: Int) -> Int) :Int{
 // write a class "Person" with first name, last name and age
 
 class Person (val firstName: String, val lastName: String, var age: Int ){
-  fun equals(other: Any): Boolean {
+  public override fun equals(other: Any?): Boolean {
       if(other == null || other !is Person)
         return false
-    return firstName == other.firstName &&
-            lastName == other.lastName &&
-            age == other.age                  
+    return this.firstName.equals(other.firstName) &&
+            this.lastName.equals(other.lastName) &&
+            this.age.equals(other.age)               
   }
-  fun hashcode(): Int = firstName.hashCode() * 31 + lastName.hashCode() * 31 + age
-  val debugString: String = "[Person firstName:$firstName lastName:$lastName age:$age]"  
+  public override fun hashCode(): Int { 
+      return firstName.hashCode() and  lastName.hashCode() 
+}
+  val debugString: String 
+    get() = "[Person firstName:$firstName lastName:$lastName age:$age]"  
 }
 
 
 // write a class "Money"
 
 class Money (val amount: Int, val currency: String){
+   
+    fun convert(otherCurrency: String): Money{
+        var result = 0
+         when (otherCurrency){
+            "USD" -> 
+                if(currency == "EUR") {
+                    result = 10 * amount / 15
+                } else if (currency == "GBP"){
+                    result = 10 * amount / 5
+                } else {
+                    result = 12 * amount / 15
+                }
+            "EUR" ->
+                if(currency == "USD") {
+                    result = 15 * amount / 10
+                } else if (currency == "GBP"){
+                    result = 15 * (10 * amount / 5) / 10
+                } else {
+                    result = 15 * (12 * amount / 15) / 10
+                }
+            
+            "GBP" -> 
+                if(currency == "EUR") {
+                    result = 5 * (10 * amount / 15) / 10
+                } else if (currency == "USD"){
+                    result = 5 * amount / 10
+                } else {
+                    result = 5 * (12 * amount / 15) / 10
+                }
+            "CAN" -> 
+                if(currency == "EUR") {
+                    result = 15 * (10 * amount / 15) / 10
+                } else if (currency == "GBP"){
+                    result = 15 * (10 * amount / 5) / 10
+                } else {
+                    result = 15 * amount / 12
+                }
+            else -> println("incorrect currency")
+        }
+        return Money(result, otherCurrency)
+    }
 
+    operator fun plus(a: Money): Money{
+        return Money(amount + a.amount, currency)
+    }
 }
+
+
 
 // ============ DO NOT EDIT BELOW THIS LINE =============
 
